@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ReportNotifier with ChangeNotifier {
+  //initial expenseMonthly
   final _expenseMonthly = [
     {
       'label': 'week 1',
@@ -45,6 +46,7 @@ class ReportNotifier with ChangeNotifier {
   List<Map> get expense => _expense;
 
   Future<void> calcMonthlyExpsense() async {
+    //Creates a new list, iterate through existing and get total amount per week
     _expense.clear();
 
     for (var element in _expenseMonthly) {
@@ -63,6 +65,7 @@ class ReportNotifier with ChangeNotifier {
   List get expenseMonthly => _expenseMonthly;
 
   final _byCategory = [
+    //initial expense list by category
     {
       'label': 'Food',
       'expenses': [
@@ -102,6 +105,7 @@ class ReportNotifier with ChangeNotifier {
   ];
 
   Future<void> calcMonthlyCategory() async {
+    //Create new list, iterate through existing to get total amount per category
     _expense.clear();
 
     for (var element in _byCategory) {
@@ -134,7 +138,10 @@ class ReportNotifier with ChangeNotifier {
   }
 
   void addBudget(String week, String label, String amount) {
+    //add new expense to budget by checking for selected particular week
+    //and adding to the list
     if (_expenseMonthly.any((e) => e['label'] == 'week $week')) {
+      ///handle if expense already exist
       var d = _expenseMonthly.firstWhere((e) => e['label'] == 'week $week');
 
       _expenseMonthly.removeWhere((e) => e['label'] == 'week $week');
@@ -154,8 +161,11 @@ class ReportNotifier with ChangeNotifier {
       });
     }
 
+    //add new expense to budget by checking for selected particular category
+    //and adding to the list,
     if (_byCategory.any(
         (e) => e['label'].toString().toLowerCase() == label.toLowerCase())) {
+      ///handle if expense already exist
       var d = _byCategory.firstWhere(
           (e) => e['label'].toString().toLowerCase() == label.toLowerCase());
 
